@@ -1,24 +1,48 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect, useMemo, useState } from 'react';
 import './App.css';
+import DatePicker from 'react-datepicker';
+
+import 'react-datepicker/dist/react-datepicker.css';
+//@ts-ignore
+import TimeInputPolyfill from 'react-time-input-polyfill'
+
+const CustomTimeInput = ({value, onChange}: any) => 
+    {
+      console.log('rerender');
+      // const [state, setState] = useState(value);
+
+      // useEffect(() => {
+      //   if (state) {
+      //     onChange(state);
+      //   }
+      // }, [state])
+
+      return <label>
+        <span>Yolo</span>
+        <TimeInputPolyfill
+          value={value}
+          //value={state}
+          onChange={({value}: any) => {
+            //setState(value);
+            if (value) {
+              onChange(value);
+            }
+          }}
+			/>
+      </label>
+    }
 
 function App() {
+  const [startDate, setStartDate] = useState<any>(new Date());
+
+  
+
+//    const timeInput = useMemo(() => , []);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    
+    <div>
+<DatePicker selected={startDate} onChange={date => setStartDate(date)} showTimeInput timeFormat="HH:MM" customTimeInput={<CustomTimeInput/>} />
     </div>
   );
 }
